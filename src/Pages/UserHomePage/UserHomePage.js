@@ -25,7 +25,9 @@ const UserHomePage = ({ logOutUser, appConfig, listOfRooms, showBookingPage, aut
         }
         else if (PageState === '1') {
             return <ReservationsPage
+                appConfig={appConfig}
                 auth={auth}
+                listOfRooms={listOfRooms}
             />
         }
         else {

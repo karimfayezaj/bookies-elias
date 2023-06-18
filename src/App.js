@@ -1,18 +1,20 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 
+import { Fragment, useState, useRef } from 'react';
 
+import { Preferences } from "@capacitor/preferences";
+
+// Import the App styling CSS file
 import './App.css';
 
 // Import the functions you need from the SDKs you need
+// the initializeApp is to create a connection between the application and the firebase cloud solution
 import { initializeApp } from "firebase/app";
-
-// import { getDatabase, ref } from "firebase/database";
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
-// import RoomBookingPage from './Pages/RoomPage/RoomBookingPage';
+
+
+
 import LoginPage from './Pages/LoginPage/LoginPage';
-// import { useEffect } from 'react';
-import { Preferences } from "@capacitor/preferences";
-import { Fragment, useState, useRef } from 'react';
 import UserHomePage from './Pages/UserHomePage/UserHomePage';
 import BookingModal from './Interfaces/BookingModal/BookingModal';
 
@@ -33,9 +35,13 @@ const firebaseConfig = {
   appId: "1:1055533390822:web:4127cf6996b58ee6731427",
   measurementId: "G-2Y4M42XQLW"
 };
+
+
+
 const app = initializeApp(firebaseConfig);
 console.log(app);
 const auth = getAuth(app);
+
 
 const listOfRooms = [
   { id: 'Room41.jpeg', resume: 'Queen bed for 1', title: 'Special 1' },
@@ -56,16 +62,12 @@ const App = () => {
   const [roomNumbertoBook, setRoomNumbertoBook] = useState('');
 
 
-
-
   const hideModal = () => setModal(false);
 
   const showModal = (roomNumber) => {
     setModal(true);
     setRoomNumbertoBook(roomNumber);
   }
-
-
 
   const handleSubmit = async (event) => {
     event.preventDefault();

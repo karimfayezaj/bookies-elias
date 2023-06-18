@@ -1,0 +1,42 @@
+This file describes and documents, 
+everyhing the developers, user and clients has to know
+and understand to makwe the application operate successfully
+
+
+Documentation for Developers:
+The app was created using React JS, CSS, Capacitor JS and Firebase Cloud Solution.
+React JS , develops the frontend and manages the state of the application.
+CSS , styles the components and widgets seen on the user's interface.
+Capacitor JS, provides mobile native capabilities, to use the native features.
+Firebase Cloud Solution is used as backend, database, hosting in this projects.
+    Authentication ,  Storage, Realtime Database, and Hosting are used to do the work.
+
+commands used over the creation and configuration of the development environment for the project:
+    - React JS:
+        1) npx create-react-app ******
+        // to create and generate all the files for the project where ***** is the name of the project
+        2) npm start
+        // run the server development setup for debugging and implementation of new code
+        3) npm run build
+        // builds the react app , making ready for deployment
+
+    - Capacitor JS:
+        1) npm i @capacitor/core
+        // this adds the needed node module to use Capacitor core inside the React App
+        2) npm i -D @capacitor/cli
+        // this add the Capacitor CLI into the project to run Capacitor Specific commands
+        3) npx cap init
+        // this command initialize the creation of the Capacitors Capabilites to the projects
+        // more specificaly it generates the files needed for conversion to native code
+        4) npm i @capacitor/android @capacitor/ios
+        // this downloads the platform we are aiming to build the application for
+        5) npx cap add ios
+        // it adds the platform to the project
+        6) npx cap sync
+        // Syncs the built code to the cocoapods and the IOS simulators
+
+    -Firebase for React Applications:
+        1) 
+
+    
+
