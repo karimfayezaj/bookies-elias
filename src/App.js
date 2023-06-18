@@ -12,8 +12,9 @@ import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import LoginPage from './Pages/LoginPage/LoginPage';
 // import { useEffect } from 'react';
 import { Preferences } from "@capacitor/preferences";
-import { useEffect, useState, useRef } from 'react';
+import { Fragment, useState, useRef } from 'react';
 import UserHomePage from './Pages/UserHomePage/UserHomePage';
+import BookingModal from './Interfaces/BookingModal/BookingModal';
 
 
 
@@ -36,47 +37,35 @@ const app = initializeApp(firebaseConfig);
 console.log(app);
 const auth = getAuth(app);
 
-
-// // getDatabase calls and connects to the database of the application initialized above
-// const database = getDatabase(app);
-// // databaseRef give a ref to the database we are going to store data in
-// const databaseRef = ref(database);
-// console.log(databaseRef);
-
-
-
-// const listOfRooms = [
-//   { id: 'Room40.jpeg', resume: 'Single bed for 1' },
-//   { id: 'Room41.jpeg', resume: 'Queen bed for 1' },
-//   { id: 'Room42.jpeg', resume: 'Queen bed for 2' },
-//   { id: 'Room43.jpeg', resume: 'Separate bed for 2' },
-// ];
+const listOfRooms = [
+  { id: 'Room41.jpeg', resume: 'Queen bed for 1', title: 'Special 1' },
+  { id: 'Room42.jpeg', resume: 'Queen bed for 2', title: 'Double Couple' },
+  { id: 'Room43.jpeg', resume: 'Separate bed for 2', title: 'Good Business' },
+  { id: 'Room44.jpeg', resume: 'Queen bed for 2', title: 'Sea Suite' },
+  { id: 'Room45.jpeg', resume: 'Singles for 3', title: 'Triple Single' },
+  { id: 'Room46.jpeg', resume: 'Queen bed + 1', title: 'Family Deal' },
+];
 
 
 
 const App = () => {
-  const credentials = useRef();
-  const currentUser = useRef();
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const loginRef = useRef();
+  const [errorMessage, setErrorMessage] = useState();
+  const [modal, setModal] = useState(false);
+  const [roomNumbertoBook, setRoomNumbertoBook] = useState('');
 
-  // const checkUserAvailability = async () => {
-  //   const email = await Preferences.get({ key: 'Email' });
-  //   const password = await Preferences.get({ key: 'Password' });
-  //   credentials.current = [email.value, password.value];
-  //   if (credentials.current[0] === "") {
-  //     console.log("Loging In")
-  //     await signInWithEmailAndPassword(auth, credentials.current[0], credentials.current[1],
-  //     ).then(async (userCredentials) => {
-  //       currentUser.current = userCredentials.user;
-  //       setIsLoggedIn(true);
-  //     }).catch((error) => {
-  //       setIsLoggedIn(false);
-  //       console.log(error.code);
-  //       console.log(error.message);
-  //     })
-  //   }
-  // }
+
+
+
+  const hideModal = () => setModal(false);
+
+  const showModal = (roomNumber) => {
+    setModal(true);
+    setRoomNumbertoBook(roomNumber);
+  }
+
+
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -84,6 +73,7 @@ const App = () => {
     await signInWithEmailAndPassword(auth, loginRef.current.username.value, loginRef.current.password.value,
     ).then(async (userCredentials) => {
       const user = userCredentials.user;
+      console.log(user);
       await Preferences.set({
         'key': 'Email',
         'value': loginRef.current.username.value,
@@ -92,12 +82,11 @@ const App = () => {
         'key': 'Password',
         'value': loginRef.current.password.value,
       });
-      console.log(user);
       setIsLoggedIn(true);
     }).catch((error) => {
       setIsLoggedIn(false);
-      console.log(error.code);
-      console.log(error.message);
+      setErrorMessage(error.code);
+
     })
   };
 
@@ -108,23 +97,33 @@ const App = () => {
     console.log("Logging Out");
   }
 
-
-
-  // useEffect(() => { checkUserAvailability() });
-
-
   return (
-    <div>
-      {/* <RoomBookingPage appConfig={app} listOfRooms={listOfRooms} /> */}
-      {isLoggedIn
-        ? <UserHomePage currentUser={currentUser} logOutUser={logOutUser} />
-        : <LoginPage authConfig={auth} handleSubmitLogin={handleSubmit} loginRef={loginRef} />
-      }
+    <Fragment>{
+      modal && <BookingModal
+        hideModal={hideModal}
+        auth={auth}
+        appConfig={app}
+        roomNumber={roomNumbertoBook}
+      />
+    }
+      <main>
+        {isLoggedIn
+          ? <UserHomePage
+            logOutUser={logOutUser}
+            appConfig={app}
+            auth={auth}
+            listOfRooms={listOfRooms}
+            showBookingPage={showModal}
+          />
+          : <LoginPage
+            errorMessage={errorMessage}
+            handleSubmitLogin={handleSubmit}
+            loginRef={loginRef}
+          />
+        }
+      </main>
+    </Fragment>);
 
-
-
-    </div>
-  );
 }
 
 export default App;
