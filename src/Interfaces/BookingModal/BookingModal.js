@@ -9,19 +9,20 @@ import { useState } from 'react';
 
 const BookingModal = ({ hideModal, auth, appConfig, roomNumber }) => {
     const database = getDatabase(appConfig);
-    console.log(auth.currentUser);
     const [startDate, setStartDate] = useState('');
     const [endDate, setEndDate] = useState('');
 
     const reserveRoom = async () => {
         console.log('Reserve Room');
         await set(ref(database, `/Reservations/${roomNumber}/${auth.currentUser.uid}`), {
+            BookedBy: auth.currentUser.uid,
+            RoomNumber: roomNumber,
             Starting: startDate,
             Ending: endDate,
             Confirmed: false,
             Paid: false,
-        }).then((response) => {
-            console.log(response);
+        }, (error) => {
+            console.log(error);
         })
     }
     return <Modal>

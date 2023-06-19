@@ -5,14 +5,19 @@ import ReservationsPanel from './Components/ReservationsPanel/ReservationPanel';
 import { useEffect, useState } from 'react';
 
 
+
 const ReservationsPage = ({ auth, appConfig, listOfRooms }) => {
     const [listOfReservations, setListOfReservations] = useState([]);
 
     useEffect(() => {
         listOfRooms.forEach(element => {
-            setListOfReservations((prevReservations) => [...prevReservations, element.title]);
+            setListOfReservations((prevReservations) => [...prevReservations, element]);
         });
-    }, [listOfRooms])
+    }, [listOfRooms]);
+
+    console.log(listOfReservations);
+
+
 
 
     return <div className='push-page-up'>
@@ -23,7 +28,7 @@ const ReservationsPage = ({ auth, appConfig, listOfRooms }) => {
             <ReservationsPanel
                 auth={auth}
                 appConfig={appConfig}
-                listOfRooms={listOfReservations}
+                listOfReservations={listOfReservations}
             />
         </div>
     </div>

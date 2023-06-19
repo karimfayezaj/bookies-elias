@@ -1,0 +1,28 @@
+.snackbar {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background-color: #333;
+    color: #fff;
+    padding: 10px;
+    border-radius: 0;
+    text-align: center;
+  }
+  
+  .snackbar p {
+    margin: 0;
+  }
+  
+  .snackbar button {
+    background-color: transparent;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    margin-top: 5px;
+    outline: none;
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+  }
+  
+  
