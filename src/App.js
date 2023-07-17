@@ -10,7 +10,9 @@ import './App.css';
 // Import the functions you need from the SDKs you need
 // the initializeApp is to create a connection between the application and the firebase cloud solution
 import { initializeApp } from "firebase/app";
-import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import { createUserWithEmailAndPassword, getAuth, signInWithEmailAndPassword } from "firebase/auth";
+
+import Stripe from 'stripe';
 
 
 
@@ -36,6 +38,9 @@ const firebaseConfig = {
   measurementId: "G-2Y4M42XQLW"
 };
 
+const stripe = Stripe("pk_test_51NUejFJhB08sJbHob06mvJAmvz7lEorf1GEkCA7HBoNMaS1V18bzXeLZc4ArQoClaN7u6Rbd41FtoVzgPmYBzNlj00y2BPcSwZ");
+
+
 
 
 const app = initializeApp(firebaseConfig);
@@ -55,8 +60,11 @@ const listOfRooms = [
 
 
 const App = () => {
+
+  console.log(stripe.elements);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const loginRef = useRef();
+  const signUpRef = useRef();
   const [errorMessage, setErrorMessage] = useState();
   const [modal, setModal] = useState(false);
   const [roomNumbertoBook, setRoomNumbertoBook] = useState('');
@@ -92,6 +100,23 @@ const App = () => {
     })
   };
 
+  const handleSubmitSignUp = async (event) => {
+    event.preventDefault();
+
+    await createUserWithEmailAndPassword(
+      auth,
+      signUpRef.current.username.value,
+      signUpRef.current.password.value,
+    )
+      .then((userCredentials) => {
+
+      }).catch((error) => {
+        setIsLoggedIn(false);
+        setErrorMessage(error.code);
+      })
+  }
+
+
   const logOutUser = async () => {
     await Preferences.set({ key: 'Email', value: '' });
     await Preferences.set({ key: 'Password', value: '' });
@@ -121,6 +146,8 @@ const App = () => {
             errorMessage={errorMessage}
             handleSubmitLogin={handleSubmit}
             loginRef={loginRef}
+            handleSubmitSignUp={handleSubmitSignUp}
+            signUpRef={signUpRef}
           />
         }
       </main>

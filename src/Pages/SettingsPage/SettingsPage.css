@@ -1,0 +1,38 @@
+.profile {
+    width: 100%;
+    max-width: 375px;
+    margin: 0 auto;
+    padding: 20px;
+    border: 1px solid black;
+    box-sizing: border-box; /* Ensure padding and border are included in width calculation */
+  }
+  
+  .profile-info {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  label {
+    margin-bottom: 10px;
+  }
+  
+  input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid black;
+    box-sizing: border-box; /* Ensure padding and border are included in width calculation */
+  }
+  
+  /* Media Query for Mobile Devices */
+  @media screen and (max-width: 375px) {
+    .profile {
+      width: 100%;
+      max-width: none;
+      padding: 10px; /* Reduce padding for smaller screens */
+    }
+    
+    input {
+      padding: 8px; /* Reduce input padding for smaller screens */
+    }
+  }
+  

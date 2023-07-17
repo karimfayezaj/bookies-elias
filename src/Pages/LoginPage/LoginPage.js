@@ -1,9 +1,19 @@
+import LoginInterface from './LoginInterface/LoginInterface';
+import SignUpInterface from './SignUpInterface/SignupInterface';
 import './LoginPage.css';
+import { useState } from 'react';
 
+import '../../Components/HorizontalDivider/HorizontalDivider';
 
-
-const LoginPage = ({ handleSubmitLogin, loginRef, errorMessage }) => {
+const LoginPage = ({ handleSubmitLogin, loginRef, errorMessage, handleSubmitSignUp, signUpRef }) => {
     // create an object that uses the authentication features of getAuth called auth
+    const [loginRender, setLoginRender] = useState(false);
+
+    const changePageState = () => {
+        setLoginRender(!loginRender);
+    }
+
+
     const renderErrorMessage = () => {
         switch (errorMessage) {
             case 'auth/invalid-email':
@@ -22,30 +32,22 @@ const LoginPage = ({ handleSubmitLogin, loginRef, errorMessage }) => {
 
     return (
         <div className="login-container">
-            <form ref={loginRef} className="login-form" onSubmit={handleSubmitLogin}>
-                <h2>Login</h2>
-                <div className="form-group">
-                    <label htmlFor="username">Username</label>
-                    <input
-                        type="text"
-                        id="username"
-                        required
-                    />
-                </div>
-                <div className="form-group">
-                    <label htmlFor="password">Password</label>
-                    <input
-                        type="password"
-                        id="password"
-                        required
-                    />
-                </div>
-                <button type="submit">Login</button>
-                <div>
-                    {renderErrorMessage()}
-                </div>
-            </form>
-        </div>
+            {loginRender ?
+                <LoginInterface
+                    renderErrorMessage={renderErrorMessage}
+                    loginRef={loginRef}
+                    handleSubmitLogin={handleSubmitLogin}
+                /> :
+                <SignUpInterface
+                    renderErrorMessage={renderErrorMessage}
+                    signUpRef={signUpRef}
+                    handleSubmitSignUp={handleSubmitSignUp}
+                />
+            }
+            <div onClick={changePageState}>
+                {loginRender ? <p>SignUp</p> : <p>Login</p>}
+            </div>
+        </div >
     );
 };
 
