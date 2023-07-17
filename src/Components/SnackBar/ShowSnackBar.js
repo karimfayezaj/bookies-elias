@@ -17,7 +17,7 @@ const ShowSnackBar = () => {
         <div>
             <button onClick={handleButtonClick}>Show SnackBar</button>
             {showSnackBar && (
-                <SnackBar message="Operation completed" onClose={() => setShowSnackBar(false)} />
+                <SnackBar message="Operation completed" />
             )}
         </div>
     );

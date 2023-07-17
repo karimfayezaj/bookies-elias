@@ -2,11 +2,13 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faBook } from '@fortawesome/free-solid-svg-icons';
 import "./RoomCard.css";
 
+import RoomImage from './RoomImage';
+
 
 
 const RoomCard = ({ roomInfo, showBookingPage }) => {
     return <div className="card">
-        <img id={roomInfo.id} alt="Rendering..." />
+        <RoomImage roomId={roomInfo.id} roomPrice={roomInfo.price} />
         <div className="card-content">
             <p className="card-title">{roomInfo.title}</p>
             <button onClick={() => {

@@ -19,6 +19,8 @@ import Stripe from 'stripe';
 import LoginPage from './Pages/LoginPage/LoginPage';
 import UserHomePage from './Pages/UserHomePage/UserHomePage';
 import BookingModal from './Interfaces/BookingModal/BookingModal';
+import ShowSnackBar from './Components/SnackBar/ShowSnackBar';
+import SnackBar from './Components/SnackBar/SnackBar';
 
 
 
@@ -49,12 +51,12 @@ const auth = getAuth(app);
 
 
 const listOfRooms = [
-  { id: 'Room41.jpeg', resume: 'Queen bed for 1', title: 'Special 1' },
-  { id: 'Room42.jpeg', resume: 'Queen bed for 2', title: 'Double Couple' },
-  { id: 'Room43.jpeg', resume: 'Separate bed for 2', title: 'Good Business' },
-  { id: 'Room44.jpeg', resume: 'Queen bed for 2', title: 'Sea Suite' },
-  { id: 'Room45.jpeg', resume: 'Singles for 3', title: 'Triple Single' },
-  { id: 'Room46.jpeg', resume: 'Queen bed + 1', title: 'Family Deal' },
+  { id: 'Room41.jpeg', resume: 'Queen bed for 1', title: 'Special 1', price: 10, features: ['', 'Wifi', 'Air Conditioner', 'Breakfast Buffet'] },
+  { id: 'Room42.jpeg', resume: 'Queen bed for 2', title: 'Double Couple', price: 15, features: ['Wifi', 'Air Conditioner', 'Breakfast Buffet'] },
+  { id: 'Room43.jpeg', resume: 'Separate bed for 2', title: 'Good Business', price: 13, features: ['Wifi', 'Air Conditioner', 'Pool Access', 'Breakfast Buffet'] },
+  { id: 'Room44.jpeg', resume: 'Queen bed for 2', title: 'Sea Suite', price: 20, features: ['Wifi', 'Air Conditioner', 'Pool Access', 'Breakfast Buffet'] },
+  { id: 'Room45.jpeg', resume: 'Singles for 3', title: 'Triple Single', price: 21, features: ['Wifi', 'Air Conditioner', 'Pool Access', 'Breakfast Buffet'] },
+  { id: 'Room46.jpeg', resume: 'Queen bed + 1', title: 'Family Deal', price: 30, features: ['Wifi', 'Air Conditioner', 'Pool Access', 'Breakfast Buffet'] },
 ];
 
 
@@ -68,6 +70,9 @@ const App = () => {
   const [errorMessage, setErrorMessage] = useState();
   const [modal, setModal] = useState(false);
   const [roomNumbertoBook, setRoomNumbertoBook] = useState('');
+  const [showSnackBar, setShowSnackBar] = useState(false);
+
+  const [snackMessage, setSnackMessage] = useState('');
 
 
   const hideModal = () => setModal(false);
@@ -96,23 +101,30 @@ const App = () => {
     }).catch((error) => {
       setIsLoggedIn(false);
       setErrorMessage(error.code);
-
     })
   };
 
   const handleSubmitSignUp = async (event) => {
     event.preventDefault();
-
     await createUserWithEmailAndPassword(
       auth,
       signUpRef.current.username.value,
       signUpRef.current.password.value,
     )
       .then((userCredentials) => {
-
+        console.log('User Created');
+        setShowSnackBar(true);
+        setTimeout(() => {
+          setShowSnackBar(false);
+        }, 2000);
+        setSnackMessage('Created Successfully');
       }).catch((error) => {
         setIsLoggedIn(false);
-        setErrorMessage(error.code);
+        setShowSnackBar(true);
+        setTimeout(() => {
+          setShowSnackBar(false);
+        }, 2000);
+        setSnackMessage(error.code);
       })
   }
 
@@ -131,8 +143,12 @@ const App = () => {
         auth={auth}
         appConfig={app}
         roomNumber={roomNumbertoBook}
+        listOfRooms={listOfRooms}
       />
     }
+      {
+        showSnackBar && <SnackBar message={snackMessage} />
+      }
       <main>
         {isLoggedIn
           ? <UserHomePage

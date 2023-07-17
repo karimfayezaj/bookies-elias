@@ -4,13 +4,14 @@ import Modal from './Components/Modal';
 import { getDatabase, ref, set } from 'firebase/database';
 import './BookingModal.css';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 
-const BookingModal = ({ hideModal, auth, appConfig, roomNumber }) => {
+const BookingModal = ({ hideModal, auth, appConfig, roomNumber, listOfRooms }) => {
     const database = getDatabase(appConfig);
     const [startDate, setStartDate] = useState('');
     const [endDate, setEndDate] = useState('');
+    const [features, setFeatures] = useState([]);
 
     const reserveRoom = async () => {
         console.log('Reserve Room');
@@ -25,8 +26,30 @@ const BookingModal = ({ hideModal, auth, appConfig, roomNumber }) => {
             console.log(error);
         })
     }
+
+    const getFeatures = () => {
+        const features = [];
+        for (const item of listOfRooms) {
+            if (item.title === roomNumber) {
+                item.features.forEach(element => {
+                    features.push(<p>{element}</p>);
+                });
+            }
+        }
+        return features;
+    };
+
+    useEffect(() => {
+        const features = getFeatures();
+        setFeatures(features);
+    }, [roomNumber]);
+
     return <Modal>
         <div>
+            <h3>Special Features of this room</h3>
+            <div>
+                {features}
+            </div>
             <h3>Select Dates for {roomNumber}</h3>
             <div className="date-picker">
                 <label>Start Date:</label>

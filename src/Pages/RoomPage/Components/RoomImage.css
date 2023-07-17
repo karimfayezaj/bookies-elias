@@ -1,0 +1,12 @@
+.price-tag{
+    /* position: relative;
+    border-radius: 50; */
+    position: relative;
+    bottom: 0;
+    left: 0;
+}
+
+.price-span{
+    color:red;
+    font-size: 18;
+}

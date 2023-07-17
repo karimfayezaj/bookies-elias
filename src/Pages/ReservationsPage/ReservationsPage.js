@@ -20,7 +20,7 @@ const ReservationsPage = ({ auth, appConfig, listOfRooms }) => {
 
 
 
-    return <div className='push-page-up'>
+    return <div>
         <div className='Calendar'>
             <Calendar />
         </div>

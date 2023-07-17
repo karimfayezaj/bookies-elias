@@ -23,13 +23,14 @@ const RoomBookingPage = ({ appConfig, listOfRooms, showBookingPage }) => {
             fetchData();
         })
     });
-    return <div className="push-page-up">
+    return <div>
         <RoomCard roomInfo={listOfRooms[0]} showBookingPage={() => showBookingPage(listOfRooms[0].title)} />
         <RoomCard roomInfo={listOfRooms[1]} showBookingPage={() => showBookingPage(listOfRooms[1].title)} />
         <RoomCard roomInfo={listOfRooms[2]} showBookingPage={() => showBookingPage(listOfRooms[2].title)} />
         <RoomCard roomInfo={listOfRooms[3]} showBookingPage={() => showBookingPage(listOfRooms[3].title)} />
         <RoomCard roomInfo={listOfRooms[4]} showBookingPage={() => showBookingPage(listOfRooms[4].title)} />
         <RoomCard roomInfo={listOfRooms[5]} showBookingPage={() => showBookingPage(listOfRooms[5].title)} />
+        <div className="pusher-up"></div>
     </div>
 
 }
