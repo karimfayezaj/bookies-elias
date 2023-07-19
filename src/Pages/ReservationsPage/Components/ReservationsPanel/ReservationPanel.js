@@ -1,18 +1,15 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-// import { getDatabase, ref, get, child } from "firebase/database";
-// import { useEffect, useState } from "react";\
 
 import React, { useEffect, useState } from 'react';
-import { getDatabase, ref, get, onValue } from 'firebase/database';
+
+import { getFirestore, doc, getDoc } from 'firebase/firestore';
 import RoomReservationCard from "./RoomReservationCard/RoomReservationCard";
 
 
 const ReservationsPanel = ({ appConfig, auth, listOfReservations }) => {
 
     const [roomData, setRoomData] = useState([]);
-    const database = getDatabase(appConfig);
-    let databaseRef;
-
+    const fireStoreDB = getFirestore(appConfig);
 
     const filteredReservations = listOfReservations.filter((value, index, self) => {
         return self.indexOf(value) === index;
@@ -21,23 +18,32 @@ const ReservationsPanel = ({ appConfig, auth, listOfReservations }) => {
 
     const fetchRoomData = async () => {
         for (const element of filteredReservations) {
-            databaseRef = ref(
-                database,
-                `Reservations/${element.title}/${auth.currentUser.uid}`
-            );
-            onValue(databaseRef, (snapShot) => {
-                const data = snapShot.val();
-                if (data !== null) {
-                    setRoomData((roomData) => [...roomData, data]);
-                }
-            })
+            await getDoc(doc(fireStoreDB, `${element.title}`, `${auth.currentUser.uid}`))
+                .then((snapShot) => {
+                    const data = snapShot.data();
+                    if (data != null) {
+                        setRoomData((room) => [...room,
+                        <RoomReservationCard
+                            fireStoreDB={fireStoreDB}
+                            id={data.RoomNumber}
+                            appConfig={appConfig}
+                            auth={auth}
+                            key={data.RoomNumber}
+                            roomInfo={{
+                                title: data.RoomNumber,
+                                paid: data.Paid,
+                                startDate: data.Starting,
+                                endDate: data.Ending,
+                                price: data.Price
+                            }} />]);
+                    }
+                });
         }
     };
 
 
     const filterRoomData = async () => {
         await fetchRoomData();
-        console.log(roomData);
     }
 
     useEffect(() => {
@@ -45,28 +51,10 @@ const ReservationsPanel = ({ appConfig, auth, listOfReservations }) => {
     }, [listOfReservations]);
 
 
-    return (
-        <div className="reservation-panel">
-            {roomData.filter((value, index, self) => {
-                return self.indexOf(value) === index;
-            }).map((data) => {
-                return <RoomReservationCard
-                    id={data.RoomNumber}
-                    appConfig={appConfig}
-                    auth={auth}
-                    roomInfo={{
-                        title: data.RoomNumber,
-                        confirmed: data.Confirmed,
-                        paid: data.Paid,
-                        startDate: data.Starting,
-                        endDate: data.Ending
-                    }} />
-            }
-            )}
-        </div>
-    );
 
-
+    return <div>
+        {roomData}
+    </div>
 }
 
 export default ReservationsPanel;

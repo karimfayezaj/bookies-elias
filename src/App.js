@@ -12,14 +12,13 @@ import './App.css';
 import { initializeApp } from "firebase/app";
 import { createUserWithEmailAndPassword, getAuth, signInWithEmailAndPassword } from "firebase/auth";
 
-import Stripe from 'stripe';
 
 
 
 import LoginPage from './Pages/LoginPage/LoginPage';
 import UserHomePage from './Pages/UserHomePage/UserHomePage';
 import BookingModal from './Interfaces/BookingModal/BookingModal';
-import ShowSnackBar from './Components/SnackBar/ShowSnackBar';
+
 import SnackBar from './Components/SnackBar/SnackBar';
 
 
@@ -39,8 +38,6 @@ const firebaseConfig = {
   appId: "1:1055533390822:web:4127cf6996b58ee6731427",
   measurementId: "G-2Y4M42XQLW"
 };
-
-const stripe = Stripe("pk_test_51NUejFJhB08sJbHob06mvJAmvz7lEorf1GEkCA7HBoNMaS1V18bzXeLZc4ArQoClaN7u6Rbd41FtoVzgPmYBzNlj00y2BPcSwZ");
 
 
 
@@ -63,7 +60,6 @@ const listOfRooms = [
 
 const App = () => {
 
-  console.log(stripe.elements);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const loginRef = useRef();
   const signUpRef = useRef();
@@ -71,6 +67,7 @@ const App = () => {
   const [modal, setModal] = useState(false);
   const [roomNumbertoBook, setRoomNumbertoBook] = useState('');
   const [showSnackBar, setShowSnackBar] = useState(false);
+  const [roomPrice, setRoomPrice] = useState();
 
   const [snackMessage, setSnackMessage] = useState('');
 
@@ -80,6 +77,11 @@ const App = () => {
   const showModal = (roomNumber) => {
     setModal(true);
     setRoomNumbertoBook(roomNumber);
+    for (const item in listOfRooms) {
+      if (listOfRooms[item].title === roomNumber) {
+        setRoomPrice(listOfRooms[item].price);
+      }
+    }
   }
 
   const handleSubmit = async (event) => {
@@ -144,6 +146,7 @@ const App = () => {
         appConfig={app}
         roomNumber={roomNumbertoBook}
         listOfRooms={listOfRooms}
+        roomPrice={roomPrice}
       />
     }
       {
@@ -157,6 +160,7 @@ const App = () => {
             auth={auth}
             listOfRooms={listOfRooms}
             showBookingPage={showModal}
+
           />
           : <LoginPage
             errorMessage={errorMessage}

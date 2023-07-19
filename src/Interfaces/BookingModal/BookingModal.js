@@ -1,28 +1,38 @@
 
 import Modal from './Components/Modal';
 
-import { getDatabase, ref, set } from 'firebase/database';
+import { getFirestore, setDoc, doc, serverTimestamp } from 'firebase/firestore';
 import './BookingModal.css';
 
 import { useEffect, useState } from 'react';
 
 
-const BookingModal = ({ hideModal, auth, appConfig, roomNumber, listOfRooms }) => {
-    const database = getDatabase(appConfig);
+const BookingModal = ({ hideModal, auth, appConfig, roomNumber, listOfRooms, roomPrice }) => {
+    const firestoreDB = getFirestore(appConfig);
     const [startDate, setStartDate] = useState('');
     const [endDate, setEndDate] = useState('');
     const [features, setFeatures] = useState([]);
 
+    console.log(roomPrice);
+
+
+
     const reserveRoom = async () => {
         console.log('Reserve Room');
-        await set(ref(database, `/Reservations/${roomNumber}/${auth.currentUser.uid}`), {
+
+        await setDoc(doc(firestoreDB, `/${roomNumber}/`, `${auth.currentUser.uid}`), {
             BookedBy: auth.currentUser.uid,
             RoomNumber: roomNumber,
             Starting: startDate,
             Ending: endDate,
-            Confirmed: false,
             Paid: false,
-        }, (error) => {
+            TimeStamp: serverTimestamp(),
+            Price: roomPrice,
+            Upgraded: false,
+        }).then(() => {
+            console.log("Successful Creation")
+        }).catch((error) => {
+
             console.log(error);
         })
     }
