@@ -36,7 +36,17 @@ commands used over the creation and configuration of the development environment
         // Syncs the built code to the cocoapods and the IOS simulators
 
     -Firebase for React Applications:
-        1) 
+        1) firebase init
+        initialize the firebase connection to the react application
+        choose the 3 optiosn required:
+            A - Hosting
+            B - Storage
+            C - Firestore database
+        And follow up the procedure.
+        2) firebase login
+        Before doing anything with you project, you must be logged in to your account
+        3) firebase deploy
+        After building the project , you should deploy the built folder to the hosting function of firebase
 
     
 

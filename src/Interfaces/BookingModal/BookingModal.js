@@ -6,6 +6,8 @@ import './BookingModal.css';
 
 import { useEffect, useState } from 'react';
 
+
+import emailjs from '@emailjs/browser';
 // The booking modal is a reusable component that is just triggered and shown when needed
 // it has mutiple props which are named props
 // hideModal refering the function that would close/ hide the  modal from the user
@@ -29,6 +31,7 @@ const BookingModal = ({ hideModal, auth, appConfig, roomNumber, listOfRooms, roo
 
     // function used to reserve a room , its a async function
     const reserveRoom = async () => {
+
         // the function await this builtin function of the firestore
         // setDoc, sets the value of a specific document found in firestore dataset, with the path related to 
         // /room number , which is the title of the room that he wants to reserve
@@ -44,7 +47,13 @@ const BookingModal = ({ hideModal, auth, appConfig, roomNumber, listOfRooms, roo
             Price: roomPrice,
             Upgraded: false,
         }).then(() => {
-            console.log("Successful Creation")
+            emailjs.send("service_r8m9l9m", "template_w3oxccq", {
+                to: "eliashazar@outlook.com",
+                from: `${auth.currentUser.email}`,
+                fromdate: `${startDate}`,
+                todate: `${endDate}`,
+                roomtitle: `${roomNumber}`,
+            }, "epqBPy67np7Ev6ezE");
         }).catch((error) => {
 
             console.log(error);
