@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import './Calendar.css'; // Import the CSS file for styling
 
 const Calendar = () => {
+
     // Array of month names
     const months = [
         'January', 'February', 'March', 'April', 'May', 'June',

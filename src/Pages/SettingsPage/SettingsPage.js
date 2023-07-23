@@ -1,6 +1,11 @@
 import React, { useState } from "react";
 import "./SettingsPage.css";
 
+
+// This page does not provide much to the user
+// it just fills the user data
+// but does not feedback anything to the end user
+
 const SettingsPage = ({ logout }) => {
     const [name, setName] = useState("");
     const [username, setUsername] = useState("");

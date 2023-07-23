@@ -6,19 +6,24 @@ import { useEffect, useState } from 'react';
 
 
 
+
+
+
+// Reservations page shows the user reservations
 const ReservationsPage = ({ auth, appConfig, listOfRooms }) => {
+
+    // this state the list of reservation 
     const [listOfReservations, setListOfReservations] = useState([]);
 
+
+    //the use effect hook makes the code run once 
     useEffect(() => {
+        // running over each of the room in the list of rooms
         listOfRooms.forEach(element => {
+            // set the reservation to the element needed
             setListOfReservations((prevReservations) => [...prevReservations, element]);
         });
     }, [listOfRooms]);
-
-    console.log(listOfReservations);
-
-
-
 
     return <div className='push-page-up'>
         <div className='Calendar'>

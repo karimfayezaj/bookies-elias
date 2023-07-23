@@ -6,6 +6,9 @@ import RoomImage from './RoomImage';
 
 
 
+// room card is a reusable component 
+// it renders the room information and the it shows the booking page if clicked
+
 const RoomCard = ({ roomInfo, showBookingPage }) => {
     return <div className="card">
         <RoomImage roomId={roomInfo.id} roomPrice={roomInfo.price} />
