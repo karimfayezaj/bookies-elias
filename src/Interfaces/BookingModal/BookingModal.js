@@ -1,6 +1,8 @@
 
 import Modal from './Components/Modal';
 
+import SnackBar from "../../Components/SnackBar/SnackBar";
+
 import { getFirestore, setDoc, doc, serverTimestamp } from 'firebase/firestore';
 import './BookingModal.css';
 
@@ -29,9 +31,52 @@ const BookingModal = ({ hideModal, auth, appConfig, roomNumber, listOfRooms, roo
     // create an array for a variable state called features
     const [features, setFeatures] = useState([]);
 
+    // here to handle the snack bar state
+    const [feedbackMessage, setFeedBackMessage] = useState('');
+
+    const [token,setToken] = useState('');
+
+
+
+    const validateDate = () =>{
+        let now = Date.now();
+        let date1 = new Date(startDate);
+        let date2 = new Date(endDate);
+        if(date1 < now ||  date2 < now){
+            console.log('You cannot choose a date prior to tomorrow');
+            setFeedBackMessage('You cannot choose a date prior to tomorrow');
+        }
+        else if(date1 > date2){
+            console.log("Start Date cannot be after your end date");
+            setFeedBackMessage('Start Date cannot be after your end date')
+        }
+        else{
+            console.log(`Dates Validated\nStart Date: ${startDate}\nEnd Date: ${endDate}`);
+            reserveRoom();
+        }
+    }
+
+    const createReservationToken = () => {
+        
+        let authID = auth.currentUser.uid;
+        let time = Date.now().toString();
+        console.log(authID+time);
+        let tokenID = 
+            authID.substring(0 , 2) + 
+            time.substring(time.length , time.length-2) + 
+            authID.substring(authID.length - 1 , authID.length - 4);
+        console.log(tokenID);
+
+        setToken(tokenID);
+    }
+
+    useEffect(() => {
+        createReservationToken();
+    }, [])
+
+
     // function used to reserve a room , its a async function
     const reserveRoom = async () => {
-
         // the function await this builtin function of the firestore
         // setDoc, sets the value of a specific document found in firestore dataset, with the path related to 
         // /room number , which is the title of the room that he wants to reserve
@@ -46,21 +91,23 @@ const BookingModal = ({ hideModal, auth, appConfig, roomNumber, listOfRooms, roo
             TimeStamp: serverTimestamp(),
             Price: roomPrice,
             Upgraded: false,
-        }).then(() => {
+            ReservationId: token,
+        }).then((res) => {
+            setFeedBackMessage('Reservation Complete')
             emailjs.send("service_r8m9l9m", "template_w3oxccq", {
                 to: "eliashazar@outlook.com",
                 from: `${auth.currentUser.email}`,
                 fromdate: `${startDate}`,
                 todate: `${endDate}`,
                 roomtitle: `${roomNumber}`,
+                reservationId: `${token}`
             }, "epqBPy67np7Ev6ezE");
         }).catch((error) => {
 
             console.log(error);
-        })
+        });
+        
     }
-
-
 
     // this function is just ran once, to be fetch the features of the room that the user is reserving
     const getFeatures = () => {
@@ -81,6 +128,8 @@ const BookingModal = ({ hideModal, auth, appConfig, roomNumber, listOfRooms, roo
         // just return the features const when the funtion is created and called upon
         return features;
     };
+
+
 
     // use effect is a hook used to make a code run once only
     useEffect(() => {
@@ -117,9 +166,12 @@ const BookingModal = ({ hideModal, auth, appConfig, roomNumber, listOfRooms, roo
                 />
             </div>
             <div className="modal-buttons">
-                <button onClick={reserveRoom}>Reserve</button>
+                <button onClick={validateDate}>Reserve</button>
                 <button onClick={() => hideModal()}>Cancel</button>
             </div>
+        </div>
+        <div>
+            <p>{feedbackMessage}</p>
         </div>
     </Modal >
 

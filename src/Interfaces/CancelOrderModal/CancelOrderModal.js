@@ -1,11 +1,11 @@
 import Modal from "../BookingModal/Components/Modal";
 import React, { useEffect, useState } from 'react';
-import './UpgradeModal.css';
+import './CancelOrderModal.css';
 
 
 import { getAuth } from "firebase/auth";
 
-import { doc, getDoc, serverTimestamp, updateDoc } from 'firebase/firestore';
+import { doc, getDoc, serverTimestamp, deleteDoc } from 'firebase/firestore';
 
 import SnackBar from '../../Components/SnackBar/SnackBar';
 
@@ -15,10 +15,9 @@ import SnackBar from '../../Components/SnackBar/SnackBar';
 // room info which is the room information passed on to this components
 // firestoreDB reference that would be used to update  the document sets inside the firestore instance
 
-const UpgradeModal = ({ closeModal, roomInfo, fireStoreDB , listOfRooms }) => {
+const CancelOrderModal = ({ closeModal, roomInfo, fireStoreDB , listOfRooms,updateState }) => {
     // auth variable gets the authenticated instance of the user
     const auth = getAuth();
-    const [paidFee, setPaidFee] = useState();
     const [showSnackBar, setShowSnackBar] = useState(false);
     const [snackMessage, setSnackMessage] = useState('');
     const [startDate, setStartDate] = useState('');
@@ -28,36 +27,33 @@ const UpgradeModal = ({ closeModal, roomInfo, fireStoreDB , listOfRooms }) => {
     // here to handle the snack bar state
     const [feedbackMessage, setFeedBackMessage] = useState('');
 
-    const listOfOptions = () => {
-        
-    }
 
-    useEffect(()=> {
-        listOfOptions();
-    },[listOfRooms]);
+    const requestToDelete = async () => {
+        try{
+            await deleteDoc(doc(fireStoreDB, `/${roomInfo.title}/` , `${auth.currentUser.uid}`))
+            .then((res)=> {
+                closeModal();
+                updateState();
+            })
+        }catch{
+
+        }
+    } 
 
     return <Modal>
         {showSnackBar && <SnackBar message={snackMessage} />}
         <div>
-            <h2>Do you want to upgrade your stay?</h2>
-            <div className="row-orientation">
-                <h3  style={{flex:1}}>Options:</h3>
-                <select style={{flex: 3}}>
-                   {listOfRooms.map((element, index)=> {
-                    return <option value={`${element.title}`} key={index}>
-                        {`${element.title}`}
-                        </option>
-                    })}
-                </select>
-            </div>
+            <h2>Do you want to cancel your reservation?</h2>
             <div className="row-orientation" style={{marginTop: 15}}>
-                <button onClick={() => {console.log("Upgrade Stay")
-                }}>Upgrade</button>
-                 <button onClick={() => closeModal()}>Cancel</button>
+                <button onClick={() => closeModal()}>Hold</button>
+                 <button onClick={() => {
+                    console.log("Remove this reservation");
+                    requestToDelete();
+                }}>Remove</button>
             </div>
         </div>
     </Modal>;
 }
 
 
-export default UpgradeModal;
+export default CancelOrderModal;

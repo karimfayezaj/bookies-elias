@@ -11,7 +11,7 @@ import RoomReservationCard from "./RoomReservationCard/RoomReservationCard";
 // the auth instance
 // the list of reservation fed by the reserbatiopn page
 
-const ReservationsPanel = ({ appConfig, auth, listOfReservations }) => {
+const ReservationsPanel = ({ appConfig, auth, listOfReservations , listOfRooms }) => {
 
     // the room data use State with ana initial empty array
     const [roomData, setRoomData] = useState([]);
@@ -38,17 +38,20 @@ const ReservationsPanel = ({ appConfig, auth, listOfReservations }) => {
                         setRoomData((room) => [...room,
                         // all the props are set from the data fetched online
                         <RoomReservationCard
+                            listOfRooms={listOfRooms}
                             fireStoreDB={fireStoreDB}
                             id={data.RoomNumber}
                             appConfig={appConfig}
                             auth={auth}
                             key={data.RoomNumber}
+                            updateState = {() => filterRoomData}
                             roomInfo={{
                                 title: data.RoomNumber,
                                 paid: data.Paid,
                                 startDate: data.Starting,
                                 endDate: data.Ending,
-                                price: data.Price
+                                price: data.Price,
+                                orderId: data.ReservationId,
                             }} />]);
                     }
                 });
