@@ -53,7 +53,11 @@ const UpgradeModal = ({ closeModal, roomInfo, fireStoreDB , listOfRooms }) => {
             <div className="row-orientation" style={{marginTop: 15}}>
                 <button onClick={() => {console.log("Upgrade Stay")
                 }}>Upgrade</button>
-                 <button onClick={() => closeModal()}>Cancel</button>
+                 <button onClick={() => {
+                    console.log('Hi Aldop');
+                    closeModal();
+                }
+                }>Cancel</button>
             </div>
         </div>
     </Modal>;

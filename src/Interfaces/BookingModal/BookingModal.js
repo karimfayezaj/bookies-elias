@@ -72,7 +72,7 @@ const BookingModal = ({ hideModal, auth, appConfig, roomNumber, listOfRooms, roo
 
     useEffect(() => {
         createReservationToken();
-    }, [])
+    },[])
 
 
     // function used to reserve a room , its a async function
