@@ -5,7 +5,7 @@ import SnackBar from '../../Components/SnackBar/SnackBar';
 
 import { getFirestore, setDoc, doc, serverTimestamp } from 'firebase/firestore';
 
-import emailjs from '@emailjs/browser';
+
 
 
 import { checkRoomValidity } from "../../API/firebase";
@@ -28,12 +28,10 @@ const RescheduleModal = ({ closeModal, roomInfo, appConfig, auth }) => {
     const [token,setToken] = useState('');
 
     // here to handle the snack bar state
-    const [feedbackMessage, setFeedBackMessage] = useState('');
 
-
+    let title = roomInfo.title;
 
     const createReservationToken = () => {
-        
         let authID = auth.currentUser.uid;
         let time = Date.now().toString();
         let tokenID = 
@@ -43,10 +41,8 @@ const RescheduleModal = ({ closeModal, roomInfo, appConfig, auth }) => {
         setToken(tokenID);
     }
 
-    console.log(roomInfo);
 
     useEffect(() => {
-        checkRoomValidity(appConfig ,roomInfo.title , roomInfo.orderId );
         createReservationToken();
     }, [])
 
@@ -57,16 +53,20 @@ const RescheduleModal = ({ closeModal, roomInfo, appConfig, auth }) => {
         let date2 = new Date(endDate);
         if(date1 < now ||  date2 < now){
             console.log('You cannot choose a date prior to tomorrow');
-            setFeedBackMessage('You cannot choose a date prior to tomorrow');
+            setSnackMessage('You cannot choose a date prior to tomorrow');
         }
         else if(date1 > date2){
             console.log("Start Date cannot be after your end date");
-            setFeedBackMessage('Start Date cannot be after your end date')
+            setSnackMessage('Start Date cannot be after your end date');
         }
         else{
             console.log(`Dates Validated\nStart Date: ${startDate}\nEnd Date: ${endDate}`);
-            reserveRoom();
+            checkRoomValidity(appConfig , roomInfo,{startDate , endDate,token , title},setSnackMessage);
         }
+        setShowSnackBar(true);
+        setTimeout(() => {
+            setShowSnackBar(false);
+        } , 2000);
     }
 
 
@@ -74,37 +74,7 @@ const RescheduleModal = ({ closeModal, roomInfo, appConfig, auth }) => {
 
 
     // function used to reserve a room , its a async function
-    const reserveRoom = async () => {
-        // the function await this builtin function of the firestore
-        // setDoc, sets the value of a specific document found in firestore dataset, with the path related to 
-        // /room number , which is the title of the room that he wants to reserve
-        // followed by the user uid , making it personnaly to himself 
-        await setDoc(doc(firestoreDB, `/${roomInfo.title}/`, `${auth.currentUser.uid}`), {
-            // writes this JSON object into the the dataset
-            BookedBy: auth.currentUser.uid,
-            RoomNumber: roomInfo.title,
-            Starting: startDate,
-            Ending: endDate,
-            Paid: false,
-            TimeStamp: serverTimestamp(),
-            Price: roomInfo.price,
-            Upgraded: false,
-            ReservationId: token,
-        }).then((res) => {
-            setFeedBackMessage('Reservation Complete')
-            emailjs.send("service_r8m9l9m", "template_w3oxccq", {
-                to: "eliashazar@outlook.com",
-                from: `${auth.currentUser.email}`,
-                fromdate: `${startDate}`,
-                todate: `${endDate}`,
-                roomtitle: `${roomInfo.title}`,
-                reservationId: `${token}`
-            }, "epqBPy67np7Ev6ezE");
-        }).catch((error) => {
-
-            console.log(error);
-        });
-    }
+    
 
     return <Modal>
         {showSnackBar && <SnackBar message={snackMessage} />}

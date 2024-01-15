@@ -1,5 +1,5 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faBook } from '@fortawesome/free-solid-svg-icons';
+import { faPerson } from '@fortawesome/free-solid-svg-icons';
 import "./RoomCard.css";
 
 import RoomImage from './RoomImage';
@@ -18,8 +18,8 @@ const RoomCard = ({ roomInfo, showBookingPage }) => {
                 console.log(`Book this room ${roomInfo.id}`);
                 showBookingPage();
             }}>
-                <FontAwesomeIcon icon={faBook} className="card-button-icon" />
-                <p className="card-button-text">{roomInfo.resume}</p>
+                <FontAwesomeIcon icon={faPerson} className="card-button-icon" />
+                <p className="card-button-text">#{roomInfo.resume}</p>
             </button>
         </div>
     </div>;

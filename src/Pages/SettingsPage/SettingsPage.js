@@ -6,7 +6,7 @@ import "./SettingsPage.css";
 // it just fills the user data
 // but does not feedback anything to the end user
 
-const SettingsPage = ({ logout }) => {
+const SettingsPage = ({ logOutUser }) => {
     const [name, setName] = useState("");
     const [username, setUsername] = useState("");
     const [email, setEmail] = useState("");
@@ -45,7 +45,9 @@ const SettingsPage = ({ logout }) => {
                 />
             </div>
             <div>
-                <button onClick={() => logout}>Logout</button>
+                <button onClick={() => {
+                    logOutUser();  
+                }}>Logout</button>
             </div>
         </div>
     );

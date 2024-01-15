@@ -10,6 +10,7 @@ import { useEffect, useState } from 'react';
 
 
 import emailjs from '@emailjs/browser';
+import { checkRoomValidity } from '../../API/firebase';
 // The booking modal is a reusable component that is just triggered and shown when needed
 // it has mutiple props which are named props
 // hideModal refering the function that would close/ hide the  modal from the user
@@ -37,6 +38,25 @@ const BookingModal = ({ hideModal, auth, appConfig, roomNumber, listOfRooms, roo
     const [token,setToken] = useState('');
 
 
+    const [roomInfo , setRoomInfo] = useState();
+    let title = roomNumber;
+
+    
+    
+
+    
+    const createRoomInfo = () => {
+        for (let index = 0; index < listOfRooms.length; index++) {
+            const element = listOfRooms[index];
+            if(element.title === roomNumber){
+                setRoomInfo({
+                    title: element.title,
+                    price: element.price,
+                })
+            }
+        }
+    }
+
 
     const validateDate = () =>{
         let now = Date.now();
@@ -52,7 +72,7 @@ const BookingModal = ({ hideModal, auth, appConfig, roomNumber, listOfRooms, roo
         }
         else{
             console.log(`Dates Validated\nStart Date: ${startDate}\nEnd Date: ${endDate}`);
-            reserveRoom();
+            checkRoomValidity(appConfig ,roomInfo , {startDate,endDate , token,title,},setFeedBackMessage)
         }
     }
 
@@ -72,42 +92,12 @@ const BookingModal = ({ hideModal, auth, appConfig, roomNumber, listOfRooms, roo
 
     useEffect(() => {
         createReservationToken();
+        createRoomInfo();
     },[])
 
 
     // function used to reserve a room , its a async function
-    const reserveRoom = async () => {
-        // the function await this builtin function of the firestore
-        // setDoc, sets the value of a specific document found in firestore dataset, with the path related to 
-        // /room number , which is the title of the room that he wants to reserve
-        // followed by the user uid , making it personnaly to himself 
-        await setDoc(doc(firestoreDB, `/${roomNumber}/`, `${auth.currentUser.uid}`), {
-            // writes this JSON object into the the dataset
-            BookedBy: auth.currentUser.uid,
-            RoomNumber: roomNumber,
-            Starting: startDate,
-            Ending: endDate,
-            Paid: false,
-            TimeStamp: serverTimestamp(),
-            Price: roomPrice,
-            Upgraded: false,
-            ReservationId: token,
-        }).then((res) => {
-            setFeedBackMessage('Reservation Complete')
-            emailjs.send("service_r8m9l9m", "template_w3oxccq", {
-                to: "eliashazar@outlook.com",
-                from: `${auth.currentUser.email}`,
-                fromdate: `${startDate}`,
-                todate: `${endDate}`,
-                roomtitle: `${roomNumber}`,
-                reservationId: `${token}`
-            }, "epqBPy67np7Ev6ezE");
-        }).catch((error) => {
 
-            console.log(error);
-        });
-        
-    }
 
     // this function is just ran once, to be fetch the features of the room that the user is reserving
     const getFeatures = () => {

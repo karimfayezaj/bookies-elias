@@ -44,11 +44,11 @@
 
 .card-button-icon {
   color: #333;
-  font-size: 24px;
+  font-size: 32px;
   margin-bottom: 4px; /* Add margin bottom to create space between icon and text */
 }
 
 .card-button-text {
-  font-size: 12px;
+  font-size: 18px;
   color: #333; 
 }

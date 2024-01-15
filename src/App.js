@@ -13,7 +13,7 @@ import { initializeApp } from "firebase/app";
 
 // Import the needed hooks, or functions
 // from the firebase/auth library
-import { createUserWithEmailAndPassword, getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import { createUserWithEmailAndPassword, getAuth, signInWithEmailAndPassword , signOut } from "firebase/auth";
 
 
 
@@ -57,12 +57,12 @@ const auth = getAuth(app);
 
 // all the rooms are listed witht their id ,  title , resumer, price and features.
 const listOfRooms = [
-  { id: 'Room41.jpeg', resume: 'Queen bed for 1', title: 'Special 1', price: 10, features: ['', 'Wifi', 'Air Conditioner', 'Breakfast Buffet'] },
-  { id: 'Room42.jpeg', resume: 'Queen bed for 2', title: 'Double Couple', price: 15, features: ['Wifi', 'Air Conditioner', 'Breakfast Buffet'] },
-  { id: 'Room43.jpeg', resume: 'Separate bed for 2', title: 'Good Business', price: 13, features: ['Wifi', 'Air Conditioner', 'Pool Access', 'Breakfast Buffet'] },
-  { id: 'Room44.jpeg', resume: 'Queen bed for 2', title: 'Sea Suite', price: 20, features: ['Wifi', 'Air Conditioner', 'Pool Access', 'Breakfast Buffet'] },
-  { id: 'Room45.jpeg', resume: 'Singles for 3', title: 'Triple Single', price: 21, features: ['Wifi', 'Air Conditioner', 'Pool Access', 'Breakfast Buffet'] },
-  { id: 'Room46.jpeg', resume: 'Queen bed + 1', title: 'Family Deal', price: 30, features: ['Wifi', 'Air Conditioner', 'Pool Access', 'Breakfast Buffet'] },
+  { id: 'Room41.jpeg', resume: '1', title: 'Special 1', price: 10, features: ['', 'Wifi', 'Air Conditioner', 'Breakfast Buffet'] },
+  { id: 'Room42.jpeg', resume: '2', title: 'Double Couple', price: 15, features: ['Wifi', 'Air Conditioner', 'Breakfast Buffet'] },
+  { id: 'Room43.jpeg', resume: '2', title: 'Good Business', price: 13, features: ['Wifi', 'Air Conditioner', 'Pool Access', 'Breakfast Buffet'] },
+  { id: 'Room44.jpeg', resume: '2', title: 'Sea Suite', price: 20, features: ['Wifi', 'Air Conditioner', 'Pool Access', 'Breakfast Buffet'] },
+  { id: 'Room45.jpeg', resume: '3', title: 'Triple Single', price: 21, features: ['Wifi', 'Air Conditioner', 'Pool Access', 'Breakfast Buffet'] },
+  { id: 'Room46.jpeg', resume: '2+1', title: 'Family Deal', price: 30, features: ['Wifi', 'Air Conditioner', 'Pool Access', 'Breakfast Buffet'] },
 ];
 
 
@@ -202,10 +202,11 @@ const App = () => {
   // logout function , logout the user from its authenticated application
   const logOutUser = async () => {
     // sets the preferences EMail and Password to empty strings
-    await Preferences.set({ key: 'Email', value: '' });
-    await Preferences.set({ key: 'Password', value: '' });
     // sets log in state to false, loggin out the user from the application
     setIsLoggedIn(false);
+    await signOut(auth).then(() => {
+      console.log("Logged Out");
+    });
   }
 
 

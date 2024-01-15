@@ -36,6 +36,7 @@ const RoomReservationCard = ({ roomInfo, appConfig, auth, fireStoreDB , listOfRo
                     fireStoreDB={fireStoreDB} 
                     roomInfo={roomInfo}
                     listOfRooms={listOfRooms}
+                    appConfig={appConfig}
                 />
             }
             {rescheduleModal &&
