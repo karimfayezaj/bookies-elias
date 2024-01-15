@@ -1,0 +1,82 @@
+<mxfile host="Electron" modified="2024-01-15T10:01:28.394Z" agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/22.1.11 Chrome/114.0.5735.289 Electron/25.9.8 Safari/537.36" etag="1RI0GuvLSBsNL2hh77GD" version="22.1.11" type="device">
+  <diagram name="Page-1" id="MVQa5WwQGU_UKWpcvGz6">
+    <mxGraphModel dx="1026" dy="683" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="sCZmkyGONnhnUTCe34Ti-4" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;" edge="1" parent="1" source="sCZmkyGONnhnUTCe34Ti-1" target="sCZmkyGONnhnUTCe34Ti-2">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="sCZmkyGONnhnUTCe34Ti-1" value="V0 - Initialization of Project and Setting Up Development Environment" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="50" y="30" width="200" height="110" as="geometry" />
+        </mxCell>
+        <mxCell id="sCZmkyGONnhnUTCe34Ti-5" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="sCZmkyGONnhnUTCe34Ti-2" target="sCZmkyGONnhnUTCe34Ti-3">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="sCZmkyGONnhnUTCe34Ti-2" value="V1 - Login Page and Authentication System with Firebase" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="310" y="30" width="200" height="110" as="geometry" />
+        </mxCell>
+        <mxCell id="sCZmkyGONnhnUTCe34Ti-9" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="sCZmkyGONnhnUTCe34Ti-3" target="sCZmkyGONnhnUTCe34Ti-6">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="sCZmkyGONnhnUTCe34Ti-3" value="V2 - Multi Page App ( Reservation / Rooms / Settings)" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="580" y="30" width="200" height="110" as="geometry" />
+        </mxCell>
+        <mxCell id="sCZmkyGONnhnUTCe34Ti-8" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="sCZmkyGONnhnUTCe34Ti-6" target="sCZmkyGONnhnUTCe34Ti-7">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="sCZmkyGONnhnUTCe34Ti-6" value="V3 - Reservation Set Up&amp;nbsp; , Saving to Realtime Database Firestore" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="580" y="200" width="200" height="110" as="geometry" />
+        </mxCell>
+        <mxCell id="sCZmkyGONnhnUTCe34Ti-11" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="sCZmkyGONnhnUTCe34Ti-7" target="sCZmkyGONnhnUTCe34Ti-10">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="sCZmkyGONnhnUTCe34Ti-7" value="V4 - Reservation Panel, Showing the user his reservation" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="310" y="200" width="200" height="110" as="geometry" />
+        </mxCell>
+        <mxCell id="sCZmkyGONnhnUTCe34Ti-13" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="sCZmkyGONnhnUTCe34Ti-10" target="sCZmkyGONnhnUTCe34Ti-12">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="sCZmkyGONnhnUTCe34Ti-10" value="V5 - Features and Prices for Rooms" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="50" y="200" width="200" height="110" as="geometry" />
+        </mxCell>
+        <mxCell id="sCZmkyGONnhnUTCe34Ti-15" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="sCZmkyGONnhnUTCe34Ti-12" target="sCZmkyGONnhnUTCe34Ti-14">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="sCZmkyGONnhnUTCe34Ti-12" value="V6 - Refactoring of UI for Rooms Page and Reservation Panel" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="50" y="360" width="200" height="110" as="geometry" />
+        </mxCell>
+        <mxCell id="sCZmkyGONnhnUTCe34Ti-17" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="sCZmkyGONnhnUTCe34Ti-14" target="sCZmkyGONnhnUTCe34Ti-16">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="sCZmkyGONnhnUTCe34Ti-14" value="V7 - Modals Implementation for booking / rescheduling and upgrading" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="310" y="360" width="200" height="110" as="geometry" />
+        </mxCell>
+        <mxCell id="sCZmkyGONnhnUTCe34Ti-19" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="sCZmkyGONnhnUTCe34Ti-16" target="sCZmkyGONnhnUTCe34Ti-18">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="sCZmkyGONnhnUTCe34Ti-16" value="V8 - SnackBars added for feedback when user needs to see a response" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="580" y="360" width="200" height="110" as="geometry" />
+        </mxCell>
+        <mxCell id="sCZmkyGONnhnUTCe34Ti-21" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="sCZmkyGONnhnUTCe34Ti-18" target="sCZmkyGONnhnUTCe34Ti-20">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="sCZmkyGONnhnUTCe34Ti-18" value="V9 - Combined Reservation. , Upgrade and Edit to same functions" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="580" y="520" width="200" height="110" as="geometry" />
+        </mxCell>
+        <mxCell id="sCZmkyGONnhnUTCe34Ti-20" value="V10 - Added Email Feature , to send email to the user" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="310" y="520" width="200" height="110" as="geometry" />
+        </mxCell>
+        <mxCell id="sCZmkyGONnhnUTCe34Ti-24" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="sCZmkyGONnhnUTCe34Ti-22" target="sCZmkyGONnhnUTCe34Ti-23">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="sCZmkyGONnhnUTCe34Ti-22" value="V11 - Documentation" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="50" y="520" width="200" height="110" as="geometry" />
+        </mxCell>
+        <mxCell id="sCZmkyGONnhnUTCe34Ti-23" value="V12 - Final Build and Release for Android and iOS" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="50" y="690" width="200" height="110" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
